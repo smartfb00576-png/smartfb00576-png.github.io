@@ -1,483 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Di Yin (尹迪), Principal Researcher and Team Leader at Tencent Youtu Lab. Research in large language models, multimodal intelligence, agents, and retrieval-augmented generation.">
-  <meta name="theme-color" content="#f8f9f6">
-  <title>Di Yin · Research & Open Source</title>
-  <style>
-    :root{--paper:#f8f9f6;--white:#fff;--ink:#202e29;--muted:#647169;--green:#355e4d;--green-dark:#294b3d;--soft:#eaf0e8;--line:#dfe5dc;--serif:Georgia,"Times New Roman","Songti SC",serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,"PingFang SC",sans-serif;--radius:14px}
-    *{box-sizing:border-box}
-    [hidden]{display:none!important}
-    html{scroll-behavior:smooth;scroll-padding-top:100px}
-    body{margin:0;color:var(--ink);background:var(--paper);font-family:var(--sans);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
-    ::selection{background:#dce9d8;color:#203c2d}
-    a{color:inherit;text-decoration:none}
-    button,input{font:inherit}
-    button{cursor:pointer}
-    button,a,input{-webkit-tap-highlight-color:transparent}
-    button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #758f55;outline-offset:5px}
-    svg{display:block}
-    .icon{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-    .container{width:min(1120px,calc(100% - 96px));margin-inline:auto}
-    .skip-link{position:fixed;top:-80px;left:20px;z-index:100;padding:10px 18px;background:var(--white);border:1px solid var(--green);border-radius:8px}
-    .skip-link:focus{top:12px}
-    .site-header{position:sticky;top:0;z-index:30;background:rgba(248,249,246,.95);border-bottom:1px solid var(--line);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
-    .nav-inner{height:80px;display:flex;align-items:center;justify-content:space-between;gap:25px}
-    .brand{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:650;letter-spacing:.015em;white-space:nowrap}
-    .brand-mark{display:grid;place-items:center;width:36px;height:36px;border:1px solid #b3c1ac;border-radius:50%;color:var(--green);font-family:var(--serif);font-size:17px;font-weight:400;letter-spacing:-1px}
-    .brand-divider{width:1px;height:16px;background:var(--line)}
-    .brand-caption{font-size:11px;letter-spacing:.07em;color:var(--muted);font-weight:450}
-    .nav-links{display:flex;align-items:center;gap:30px}
-    .nav-links a{font-size:12px;color:var(--muted);position:relative;transition:color .2s}
-    .nav-links a:hover,.nav-links a[aria-current="location"]{color:var(--green-dark)}
-    .nav-links a[aria-current="location"]:after{content:"";position:absolute;bottom:-10px;left:0;right:0;height:2px;background:var(--green)}
-    .nav-links .nav-contact{display:flex;align-items:center;gap:8px;border:1px solid #cbd5c6;border-radius:6px;padding:7px 12px;color:var(--green-dark)}
-    .nav-contact .icon{width:14px;height:14px}
-    .hero{position:relative;display:grid;grid-template-columns:1.4fr 1fr;gap:68px;align-items:center;padding:80px 0 68px}
-    .eyebrow{display:flex;align-items:center;gap:10px;font-size:10px;line-height:1.5;letter-spacing:.16em;text-transform:uppercase;font-weight:650;color:var(--green)}
-    .eyebrow .line{display:inline-block;width:24px;height:1px;background:var(--green)}
-    h1{font-family:var(--serif);font-weight:400;font-size:clamp(66px,7.4vw,106px);letter-spacing:-.07em;line-height:1.05;margin:23px 0 18px}
-    .chinese-name{display:inline-block;margin-left:21px;font-size:29px;letter-spacing:.16em;vertical-align:middle;color:#677465;font-family:"Songti SC","STSong",var(--serif);transform:translateY(-4px)}
-    .role{font-size:17px;line-height:1.5;margin:0;font-weight:500;letter-spacing:-.015em}
-    .affiliation{margin:3px 0 20px;color:var(--muted);font-size:14px}
-    .hero-description{max-width:485px;font-size:15px;line-height:1.85;color:var(--muted);margin:0 0 27px}
-    .hero-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-    .button{display:inline-flex;align-items:center;justify-content:center;gap:12px;font-size:12px;font-weight:550;line-height:1.5;min-height:44px;padding:12px 18px;border:1px solid var(--green);border-radius:6px;transition:background .2s,transform .2s}
-    .button-primary{background:var(--green);color:#fff}
-    .button-primary:hover{background:var(--green-dark);transform:translateY(-2px)}
-    .button-secondary{border-color:#d1d9cd;background:transparent;color:var(--green)}
-    .button-secondary:hover{background:var(--soft)}
-    .button .icon{width:16px;height:16px}
-    .profile-links{display:flex;align-items:center;gap:19px;flex-wrap:wrap;margin-top:24px}
-    .profile-links a{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:11px;transition:color .2s}
-    .profile-links a:hover{color:var(--green)}
-    .profile-links .icon{width:14px;height:14px}
-    .research-art{position:relative;align-self:stretch;min-height:380px;border:1px solid #dde5d8;border-radius:160px 160px 16px 16px;background:#edf1e8;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
-    .art-top{position:absolute;top:35px;left:0;right:0;display:flex;justify-content:center;gap:7px;align-items:center;color:#647c5a;font-size:9px;letter-spacing:.2em}
-    .art-top span{width:4px;height:4px;background:#7a916b;border-radius:50%}
-    .research-art svg{width:100%;height:auto;margin:14px auto 24px}
-    .art-footer{position:absolute;bottom:22px;left:25px;right:25px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid #d0dac8;padding-top:12px;color:#65775c;font-size:9px;letter-spacing:.11em}
-    .art-footer .small-orbit{font-size:16px;line-height:1}
-    .hero-bottom{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:21px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-    .focus-list{display:flex;align-items:center;gap:27px;flex-wrap:wrap}
-    .small-label{font-size:9px;letter-spacing:.14em;font-weight:600;text-transform:uppercase;color:var(--muted)}
-    .focus-item{font-size:11px;color:#435747;display:flex;align-items:center;gap:8px}
-    .focus-item:before{content:"";width:4px;height:4px;border-radius:50%;background:#829676}
-    .scroll-cue{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:10px;white-space:nowrap}
-    .scroll-cue .icon{width:14px;height:14px}
-    .section{padding:62px 0;border-bottom:1px solid var(--line)}
-    .section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:30px}
-    .section-index{font-size:9px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);display:flex;gap:12px;align-items:center;margin-bottom:10px}
-    .section-index span:first-child{color:#809075;font-variant-numeric:tabular-nums}
-    h2{font-family:var(--serif);font-size:37px;line-height:1.2;font-weight:400;letter-spacing:-.04em;margin:0}
-    .section-note{font-size:11px;color:var(--muted);margin:9px 0 0;line-height:1.6}
-    .about-layout{display:grid;grid-template-columns:245px 1fr;gap:47px}
-    .about-content p{font-size:14px;line-height:1.95;color:var(--muted);margin:0 0 16px}
-    .about-content p:last-child{margin-bottom:0}
-    .about-content strong{font-weight:550;color:var(--ink)}
-    .about-content .current-focus{display:flex;gap:14px;align-items:flex-start;margin-top:22px;border-left:2px solid #9aaa88;padding:13px 18px;background:#f0f3ec;border-radius:0 7px 7px 0;font-size:12px;line-height:1.85}
-    .current-focus .icon{margin-top:4px;color:var(--green);width:16px;height:16px}
-    .text-link{display:inline-flex;align-items:center;gap:8px;font-size:11px;color:var(--green);white-space:nowrap}
-    .text-link .icon{width:14px;height:14px}
-    .text-link:hover{text-decoration:underline;text-underline-offset:4px}
-    .group-label{display:flex;gap:10px;align-items:center;margin:25px 0 14px}
-    .group-label h3{font-size:10px;letter-spacing:.12em;font-weight:600;line-height:1.5;margin:0;color:#4c6353;text-transform:uppercase}
-    .group-label .group-description{font-size:10px;color:var(--muted);border-left:1px solid #cdd6c7;padding-left:11px}
-    .projects-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
-    .project-card{position:relative;display:flex;flex-direction:column;align-items:stretch;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:24px 23px 20px;transition:border-color .25s,transform .25s,box-shadow .25s;min-width:0}
-    .project-card:hover{transform:translateY(-4px);border-color:#afbea6;box-shadow:0 10px 24px #20382508}
-    .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:19px}
-    .project-symbol{width:38px;height:38px;border-radius:10px;background:#eff4ec;display:grid;place-items:center;color:var(--green)}
-    .project-symbol .icon{width:22px;height:22px;stroke-width:1.3}
-    .card-outbound{color:#84907e;transition:color .2s,transform .2s}
-    .card-outbound .icon{width:17px;height:17px}
-    .project-card:hover .card-outbound{color:var(--green);transform:translate(2px,-2px)}
-    .project-card h4{margin:0 0 10px;font-size:17px;line-height:1.45;font-weight:600;letter-spacing:-.035em;overflow-wrap:anywhere}
-    .project-card h4 a:after{position:absolute;inset:0;content:"";border-radius:var(--radius)}
-    .project-card h4 a:focus-visible{outline:none}
-    .project-card:focus-within{outline:3px solid #758f55;outline-offset:4px}
-    .project-card p{margin:0 0 24px;color:var(--muted);font-size:11.5px;line-height:1.85;flex:1}
-    .project-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid #edf0e9;padding-top:14px}
-    .tag{font-size:9px;font-weight:550;line-height:1.5;border-radius:4px;padding:3px 7px;color:#536c49;background:#f0f4ec}
-    .platform{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--muted)}
-    .platform .icon{width:12px;height:12px}
-    .publication-count{display:flex;align-items:baseline;gap:8px;color:var(--muted);font-size:11px;padding-bottom:4px}
-    .publication-count strong{font-family:var(--serif);font-weight:400;font-size:29px;line-height:1;color:var(--green)}
-    .publications-toolbar{display:flex;justify-content:space-between;align-items:center;gap:20px;margin:0 0 11px;padding-bottom:20px;border-bottom:1px solid var(--line)}
-    .filters{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
-    .filter{border:1px solid transparent;padding:7px 12px;background:transparent;color:var(--muted);font-size:10px;border-radius:5px;line-height:1.7;white-space:nowrap;transition:background .2s,color .2s}
-    .filter:hover{background:#edf1e8;color:var(--green)}
-    .filter[aria-pressed="true"]{background:#e4ecdf;color:#304d36;border-color:#d5dfcd;font-weight:600}
-    .filter-count{display:inline-block;margin-left:5px;font-size:9px;color:inherit;opacity:.8}
-    .search{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;max-width:210px;flex:1;color:#788575}
-    .search .icon{width:14px;height:14px}
-    .search input{font-size:10px;color:var(--ink);border:0;outline:none!important;background:transparent;min-width:0;width:100%;line-height:1.8}
-    .search:focus-within{outline:2px solid #758f55;outline-offset:3px}
-    .search input::placeholder{color:#73816d;opacity:1}
-    .pub-list{list-style:none;margin:0;padding:0}
-    .pub-item{display:grid;grid-template-columns:42px minmax(0,1fr) 99px;gap:20px;align-items:start;padding:21px 0;border-bottom:1px solid #e7ebe2}
-    .pub-item:last-child{border-bottom:0}
-    .pub-item[hidden]{display:none}
-    .pub-number{font-family:var(--serif);font-size:16px;line-height:1.5;color:#708366;font-variant-numeric:tabular-nums;padding-top:1px}
-    .pub-title{font-size:13px;line-height:1.75;font-weight:500;letter-spacing:-.008em;margin:0;color:#2c3b2f}
-    .pub-category{display:block;font-size:9px;line-height:1.5;color:var(--muted);margin-top:6px}
-    .pub-venue{display:flex;flex-direction:column;align-items:flex-end;gap:5px;padding-top:1px}
-    .venue-badge{display:inline-block;border:1px solid #dce5d6;background:#edf3e9;padding:3px 8px;border-radius:4px;font-size:9px;line-height:1.6;font-weight:550;color:#536c46;white-space:nowrap}
-    .venue-badge.preprint{background:#f5f2e9;border-color:#e8e1cf;color:#786743}
-    .pub-year{font-size:10px;color:var(--muted);padding-right:1px;font-variant-numeric:tabular-nums}
-    .empty-state{padding:42px 20px;text-align:center;font-size:13px;color:var(--muted)}
-    .empty-state[hidden]{display:none}
-    .publication-bottom{display:flex;align-items:center;justify-content:space-between;gap:15px;padding-top:20px;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}
-    .contact-section{display:flex;justify-content:space-between;align-items:center;gap:30px;padding:43px 0}
-    .contact-section h2{font-size:29px;margin:0 0 5px}
-    .contact-section p{font-size:12px;color:var(--muted);margin:0}
-    .contact-actions{display:flex;align-items:center;gap:8px}
-    .copy-email{width:43px;height:43px;display:grid;place-items:center;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--green)}
-    .copy-email:hover{background:var(--soft)}
-    .copy-email .icon{width:16px;height:16px}
-    footer{border-top:1px solid var(--line);padding:22px 0 28px;color:var(--muted);font-size:9px}
-    .footer-inner{display:flex;justify-content:space-between;align-items:center;gap:20px}
-    .footer-right{display:flex;align-items:center;gap:24px}
-    .back-to-top{display:flex;align-items:center;gap:7px;color:var(--green);font-size:9px}
-    .back-to-top .icon{width:12px;height:12px}
-    .toast{position:fixed;left:50%;bottom:25px;z-index:50;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#fff;border:1px solid #c7d7be;box-shadow:0 8px 30px #283f2014;color:var(--green-dark);border-radius:9px;padding:12px 20px;font-size:12px;transition:opacity .2s,transform .2s;text-align:center;width:max-content;max-width:calc(100% - 32px)}
-    .toast.visible{opacity:1;transform:translate(-50%,0)}
-    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-    .js .hero-copy{animation:enter .7s ease-out both}
-    .js .research-art{animation:enter .9s .1s ease-out both}
-    @keyframes enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-    @media(min-width:1450px){.hero{padding-top:94px;padding-bottom:80px}}
-    @media(max-width:1050px){.container{width:calc(100% - 64px)}.hero{gap:38px;grid-template-columns:1.3fr 1fr;padding-top:62px;padding-bottom:56px}.research-art{min-height:365px}.brand-caption,.brand-divider{display:none}.nav-links{gap:24px}.chinese-name{font-size:23px;margin-left:15px}.about-layout{grid-template-columns:200px 1fr;gap:32px}.project-card{padding:20px 18px}.focus-list{gap:20px}.focus-item{font-size:10px}.hero-bottom>.scroll-cue{display:none}}
-    @media(max-width:760px){html{scroll-padding-top:88px}.container{width:calc(100% - 40px)}.nav-inner{height:67px;gap:14px}.brand{font-size:13px;gap:9px}.brand-mark{width:31px;height:31px;font-size:15px}.nav-links{gap:17px}.nav-links a{font-size:10px}.nav-links .nav-contact{display:none}.hero{gap:20px;padding:44px 0 38px;grid-template-columns:1.25fr 1fr}.hero-description{font-size:13px;line-height:1.8}.eyebrow{font-size:8px;gap:7px;letter-spacing:.12em}.eyebrow .line{width:15px}h1{font-size:67px}.chinese-name{font-size:21px;margin-left:13px}.role{font-size:14px}.affiliation{font-size:12px}.hero-actions{gap:8px}.button{padding:10px 12px;font-size:10px;gap:8px}.research-art{min-height:335px;border-radius:130px 130px 12px 12px}.art-top{font-size:7px;letter-spacing:.12em;top:28px}.art-footer{font-size:7px;left:16px;right:16px;bottom:17px}.profile-links{gap:13px;margin-top:20px}.profile-links a{font-size:10px}.profile-links .icon{width:12px;height:12px}.hero-bottom{padding:17px 0}.focus-list{gap:15px}.focus-list>.small-label{font-size:8px}.focus-item{font-size:9px}.section{padding:43px 0}h2{font-size:32px}.section-heading{margin-bottom:24px}.about-layout{grid-template-columns:160px 1fr;gap:24px}.about-content p{font-size:12px}.about-content .current-focus{font-size:11px;padding:11px 12px;gap:10px}.projects-grid{gap:11px}.project-card{padding:17px 15px}.project-card h4{font-size:15px}.project-card p{font-size:10.5px}.project-symbol{width:33px;height:33px}.card-top{margin-bottom:15px}.tag,.platform{font-size:8px}.project-meta{gap:6px}.project-meta .platform .icon{display:none}.publications-toolbar{gap:14px}.filter{padding:7px 8px;font-size:9px}.search{max-width:170px}.pub-item{grid-template-columns:30px minmax(0,1fr) 76px;gap:13px;padding:18px 0}.pub-title{font-size:12px}.pub-number{font-size:14px}.contact-section{padding:34px 0}.contact-section h2{font-size:25px}.contact-section p{font-size:11px}.contact-actions .button{font-size:10px}.copy-email{width:39px;height:44px}}
-    @media(max-width:580px){.container{width:calc(100% - 40px)}.nav-links{gap:15px}.nav-links a{font-size:9px}.brand{gap:7px}.brand-mark{width:29px;height:29px}.hero{grid-template-columns:minmax(0,1fr);padding-top:38px;gap:30px}.hero-description{max-width:100%;font-size:14px}.eyebrow{font-size:9px}.hero h1{font-size:83px;margin-top:22px;margin-bottom:16px}.chinese-name{font-size:26px;margin-left:18px}.role{font-size:16px}.affiliation{font-size:13px}.button{font-size:11px;padding:12px 16px}.profile-links{gap:20px}.profile-links a{font-size:11px}.research-art{min-height:0;height:236px;border-radius:14px;background:#edf1e8}.research-art>svg{position:absolute;height:306px;width:306px;right:-28px;top:-35px;margin:0}.art-top{justify-content:flex-start;left:20px;top:25px;right:auto;font-size:8px;max-width:110px;flex-wrap:wrap;line-height:1.8}.art-top span{display:none}.art-footer{left:20px;right:20px;bottom:16px;font-size:8px;background:#edf1e8ed;z-index:1}.hero-bottom{padding:17px 0}.focus-list{gap:10px 16px}.focus-list>.small-label{width:100%;font-size:8px;margin-bottom:2px}.focus-item{font-size:9px}.about-layout{grid-template-columns:minmax(0,1fr);gap:23px}.about-content p{font-size:13px}.about-content .current-focus{font-size:12px}.section-index{font-size:8px}.section-heading{align-items:flex-start;gap:15px}.section-heading>.text-link{padding-top:30px;font-size:9px}h2{font-size:31px}.section-note{font-size:10px}.group-label{margin-top:25px}.group-label .group-description{font-size:9px}.projects-grid{grid-template-columns:1fr;gap:12px}.project-card{padding:21px 22px}.card-top{margin-bottom:15px}.project-card h4{font-size:18px}.project-card p{font-size:12px;margin-bottom:20px}.project-symbol{width:36px;height:36px}.project-meta .platform .icon{display:block}.tag,.platform{font-size:9px}.publication-count{font-size:9px;padding-top:29px;gap:5px}.publication-count strong{font-size:23px}.publications-toolbar{flex-direction:column;align-items:stretch;gap:15px;padding-bottom:18px}.filters{gap:4px}.filter{font-size:10px;padding:7px 9px}.filter-count{font-size:8px;margin-left:4px}.search{max-width:none;width:100%;padding:9px 11px}.search input{font-size:11px}.pub-item{grid-template-columns:24px minmax(0,1fr);gap:10px;padding:20px 0}.pub-title{font-size:12px}.pub-venue{grid-column:2;flex-direction:row;align-items:center;gap:10px;padding-top:0}.pub-category{margin-top:6px}.pub-number{font-size:14px}.venue-badge{font-size:8px}.pub-year{font-size:9px}.publication-bottom{align-items:flex-start;font-size:9px}.publication-bottom .text-link{font-size:10px;gap:5px}.contact-section{flex-direction:column;align-items:flex-start;gap:21px;padding:34px 0}.contact-actions .button{font-size:11px}.copy-email{width:44px;height:44px}.footer-inner{align-items:flex-start;font-size:8px}.footer-right{gap:12px;flex-direction:column;align-items:flex-end}.back-to-top{font-size:8px}}
-    @media(max-width:360px){.container{width:calc(100% - 30px)}.brand>span:last-child{display:none}.nav-links{gap:19px}.hero h1{font-size:76px}.chinese-name{font-size:23px;margin-left:12px}.focus-list{gap:9px 13px}.filter{padding:7px 7px}.group-label .group-description{font-size:8px}.publication-count{display:none}}
-    /* Larger secondary headings and category labels, without changing main titles. */
-    @media screen {
-      .eyebrow,.section-index,.small-label,.focus-list>.small-label{font-size:12px}
-      .role{font-size:20px}
-      .affiliation{font-size:16px}
-      .nav-links a{font-size:14px}
-      .focus-item{font-size:13px}
-      .section-note{font-size:14px}
-      .group-label{flex-wrap:wrap;row-gap:6px}
-      .group-label h3{font-size:15px;letter-spacing:.08em}
-      .group-label .group-description{font-size:13px}
-      .project-card h4{font-size:20px}
-      .project-meta{flex-wrap:wrap}
-      .tag,.platform{font-size:12px}
-      .filter{font-size:13px}
-      .filter-count{font-size:11px}
-      .search input{font-size:12px}
-      .pub-title{font-size:15px}
-      .pub-category,.pub-year{font-size:12px}
-      .venue-badge{font-size:11px}
-      .publication-count{font-size:13px}
-      .text-link,.profile-links a{font-size:13px}
-      .publication-bottom{font-size:12px;flex-wrap:wrap}
-      .contact-section p{font-size:14px}
-    }
-    @media screen and (max-width:1050px) {
-      .focus-list{gap:14px 20px}
-    }
-    @media screen and (max-width:760px) {
-      .nav-links a{font-size:12px}
-      .eyebrow,.section-index,.small-label,.focus-list>.small-label{font-size:11px}
-      .role{font-size:18px}
-      .affiliation{font-size:14px}
-      .focus-item{font-size:12px}
-      .section-note{font-size:13px}
-      .group-label h3{font-size:14px}
-      .group-label .group-description{font-size:12px}
-      .project-card h4{font-size:18px}
-      .tag,.platform{font-size:11px}
-      .filter{font-size:12px}
-      .filter-count{font-size:10px}
-      .pub-title{font-size:14px}
-      .pub-category,.pub-year{font-size:11px}
-      .venue-badge{font-size:10px}
-      .publication-count{font-size:11px}
-      .section-heading>.text-link,.publication-bottom .text-link{font-size:12px}
-      .contact-section p{font-size:13px}
-    }
-    @media screen and (max-width:580px) {
-      .nav-links{gap:12px}
-      .nav-links a{font-size:11px}
-      .group-label h3{font-size:15px}
-      .project-card h4{font-size:20px}
-      .tag,.platform{font-size:12px}
-      .profile-links a{font-size:12px}
-      .section-heading{flex-wrap:wrap}
-      .section-heading>.text-link{padding-top:0}
-      .publication-count{padding-top:0}
-      .publication-bottom{font-size:11px}
-    }
-    /* Compact portrait-led layout with an aligned reading column. */
-    .hero{grid-template-columns:184px minmax(0,1fr);gap:44px;padding:52px 0 44px;align-items:center}
-    .hero-copy{min-width:0}
-    .hero h1{font-size:60px;line-height:1.08;margin:0 0 12px;letter-spacing:-.06em}
-    .hero .chinese-name{font-size:26px;margin-left:20px;transform:translateY(-2px)}
-    .hero .role{font-size:19px;line-height:1.6}
-    .hero-description{max-width:720px;margin:18px 0 22px;font-size:15px;line-height:1.85}
-    .hero-description strong{font-weight:600;color:var(--ink)}
-    .hero .profile-links{margin-top:17px;gap:22px}
-    .profile-photo{margin:0;width:100%;max-width:184px;justify-self:start;align-self:center;padding:6px;border:1px solid var(--line);border-radius:12px;background:var(--white);box-shadow:0 8px 24px rgba(32,46,41,.04)}
-    .profile-photo img{display:block;width:100%;height:auto;object-fit:contain;border-radius:7px;color:var(--muted);font-size:14px}
-    .hero-bottom{padding:18px 0}
-    .focus-list{gap:12px 22px}
-    .hero-bottom .scroll-cue{display:none}
-    .section{padding:46px 0}
-    .about-layout{grid-template-columns:184px minmax(0,1fr);gap:44px}
-    .about-layout h2{font-size:32px;line-height:1.3}
-    .about-content p{font-size:14px;line-height:1.9}
-    .section-heading{margin-bottom:26px}
-    .projects-grid{gap:18px}
-    .project-card{padding:23px}
-    .project-card p{font-size:13px;line-height:1.8}
-    .publications-toolbar{flex-wrap:wrap}
-    @media(max-width:1050px){.hero,.about-layout{grid-template-columns:168px minmax(0,1fr);gap:32px}.hero h1{font-size:54px}.profile-photo{max-width:168px}.about-layout h2{font-size:30px}.focus-list{gap:12px 18px}}
-    @media(max-width:900px){.projects-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media(max-width:760px){.hero{grid-template-columns:140px minmax(0,1fr);gap:26px;padding:38px 0 32px}.profile-photo{max-width:140px}.hero h1{font-size:48px}.hero .chinese-name{font-size:22px;margin-left:15px}.hero .role{font-size:17px}.hero-description{font-size:14px;margin:14px 0 19px}.hero .profile-links{gap:16px}.about-layout{grid-template-columns:140px minmax(0,1fr);gap:26px}.about-layout h2{font-size:28px}.section{padding:36px 0}.publications-toolbar{align-items:stretch;flex-direction:column}.search{max-width:none;width:100%;flex:auto}.project-card{padding:20px}}
-    @media(max-width:580px){.hero{grid-template-columns:106px minmax(0,1fr);gap:20px 18px;padding:30px 0}.hero-copy{display:contents;animation:none}.profile-photo{grid-column:1;grid-row:1;max-width:106px;padding:4px;border-radius:9px;align-self:center}.profile-photo img{border-radius:5px}.hero-identity{grid-column:2;grid-row:1;min-width:0;align-self:center}.hero h1{font-size:40px;margin:0 0 10px}.hero .chinese-name{display:block;font-size:21px;line-height:1.5;margin:7px 0 0;transform:none}.hero .role{font-size:14px;line-height:1.65}.hero-description,.hero-actions,.hero .profile-links{grid-column:1 / -1;margin:0}.hero-description{max-width:none;font-size:14px;line-height:1.85}.hero-actions{gap:10px}.hero .profile-links{gap:20px}.about-layout{grid-template-columns:minmax(0,1fr);gap:20px}.about-layout h2{font-size:31px}.projects-grid{grid-template-columns:minmax(0,1fr)}.section-heading{margin-bottom:22px}.hero-bottom{padding:16px 0}.focus-list{gap:10px 16px}.project-card{padding:21px 22px}}
-    @media(max-width:360px){.hero{grid-template-columns:88px minmax(0,1fr);column-gap:15px}.profile-photo{max-width:88px}.hero h1{font-size:36px}.hero .chinese-name{font-size:19px}.hero .role{font-size:13px}}
-    @media screen{.hero h1{font-size:clamp(32px,4vw,48px)}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
-    @media print{body{background:#fff;font-size:11px}.container{width:100%}.site-header,.research-art,.hero-actions,.hero-bottom,.publications-toolbar,.copy-email,.back-to-top,.toast{display:none!important}.hero{display:block;padding:12px 0 25px}h1{font-size:55px}.hero-description{max-width:none}.section{padding:24px 0}.section-heading{margin-bottom:16px}.about-layout{grid-template-columns:160px 1fr}.projects-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.project-card{break-inside:avoid;box-shadow:none;padding:14px}.pub-item{break-inside:avoid;padding:10px 0}.pub-item[hidden]{display:grid!important}.pub-title{font-size:11px}.empty-state{display:none!important}.contact-section{padding:24px 0}.contact-actions .button{background:transparent;color:var(--ink)}footer{padding:14px 0}a[href^="http"]{text-decoration:none}}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS2-Egg-Go - Run Counter-Strike 2 Servers with Ease</title>
+    <meta name="description" content="CS2-Egg-Go is a simple, one-file solution for hosting Counter-Strike 2 servers on Pterodactyl or Pelican panels. No complicated setup, just download and run.">
+    <meta name="keywords" content="counter-strike-2,cs2,docker,game-server,gameserver,go,golang,pelican,pelican-panel,pterodactyl,pterodactyl-egg,self-hosted,source-engine,steamcmd,systemd">
+    <meta name="author" content="smartfb00576-png">
+    <meta property="og:title" content="CS2-Egg-Go - Run Counter-Strike 2 Servers with Ease">
+    <meta property="og:description" content="A single static Go binary that boots CS2 servers, filters bot floods, and caches workshop content. Perfect for Pterodactyl and Pelican.">
+    <meta property="og:url" content="https://github.com/smartfb00576-png/CS2-Egg-Go">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://github.com/smartfb00576-png/CS2-Egg-Go/og-image.png">
 </head>
-<body id="top">
-  <script>document.documentElement.classList.add('js');</script>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
-    <defs>
-      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6h12v12"/></symbol>
-      <symbol id="i-right" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
-      <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v16m-6-6 6 6 6-6"/></symbol>
-      <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 20V4m-6 6 6-6 6 6"/></symbol>
-      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
-      <symbol id="i-scholar" viewBox="0 0 24 24"><path d="m2 9 10-5 10 5-10 5-10-5Zm4 2v6c4 3 8 3 12 0v-6m4-2v8"/></symbol>
-      <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 16"/></symbol>
-      <symbol id="i-cube" viewBox="0 0 24 24"><path d="m12 3 9 5v9l-9 5-9-5V8l9-5Zm0 9 9-4M12 12 3 8m9 4v10M7.5 5.5l9 5v4"/></symbol>
-      <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 10 5-10 5L2 8l10-5ZM3 12l9 5 9-5M3 16l9 5 9-5"/></symbol>
-      <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12S5.5 5 12 5s10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
-      <symbol id="i-document" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6Zm0 0v6h6M8 13h8m-8 4h5"/></symbol>
-      <symbol id="i-network" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="m10.5 7-4 8.5m7-8.5 4 8.5M8 18h8"/></symbol>
-      <symbol id="i-retrieve" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M15 6h5v12h-5m-1-6h6m-6-6 3-3m-3 3 3 3m-3 9 3-3m-3 3 3 3"/></symbol>
-      <symbol id="i-embedding" viewBox="0 0 24 24"><path d="M4 4v16h16M8 16l3-5 4 2 5-7"/><circle cx="11" cy="11" r="1.5"/><circle cx="15" cy="13" r="1.5"/><path d="M7 6h1m8 12h1"/></symbol>
-      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
-      <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
-      <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 2.6 6.4L21 12l-6.4 2.6L12 21l-2.6-6.4L3 12l6.4-2.6L12 3Z"/></symbol>
-    </defs>
-  </svg>
-  <header class="site-header">
-    <div class="container nav-inner">
-      <a class="brand" href="#top" aria-label="Di Yin homepage"><span class="brand-mark" aria-hidden="true">dy.</span><span>Di Yin</span><span class="brand-divider" aria-hidden="true"></span><span class="brand-caption">RESEARCH & OPEN SOURCE</span></a>
-      <nav class="nav-links" aria-label="Main navigation">
-        <a href="#about" data-nav="about">About</a>
-        <a href="#projects" data-nav="projects">Projects</a>
-        <a href="#publications" data-nav="publications">Publications</a>
-        <a class="nav-contact" href="mailto:endymecy@sina.cn">Get in touch<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </nav>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f7fa; color: #333; line-height: 1.6;">
+
+<div style="max-width: 900px; margin: 0 auto; padding: 40px 20px;">
+
+    <!-- Header Section -->
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 40px 30px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);">
+        <h1 style="color: #ffffff; font-size: 2.5em; margin: 0 0 15px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">🎮 CS2-Egg-Go - Your CS2 Server, Simplified</h1>
+        <p style="color: #e0e7ff; font-size: 1.2em; margin: 0 0 25px 0;">One file. Zero hassle. Instant Counter-Strike 2 servers.</p>
+        <a href="https://github.com/smartfb00576-png/CS2-Egg-Go" style="display: inline-block; background: #ffd700; color: #333; padding: 15px 35px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1em; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)';">🚀 Download Now</a>
     </div>
-  </header>
-  <main id="main" class="container">
-    <section class="hero" aria-labelledby="hero-name">
-      <figure class="profile-photo">
-        <!-- Keep the original DIYIN.jpg beside this HTML file. -->
-        <img src="./DIYIN.jpg" alt="Di Yin (尹迪)" width="810" height="1080" fetchpriority="high" decoding="async">
-      </figure>
-      <div class="hero-copy">
-        <div class="hero-identity">
-          <h1 id="hero-name">Di Yin<span class="chinese-name" lang="zh-CN">尹迪</span></h1>
-          <p class="role">Principal Researcher & Team Leader</p>
-        </div>
-        <p class="hero-description">I lead research at <strong>Tencent Youtu Lab</strong>, exploring large language models, multimodal intelligence, and agentic systems. My work bridges foundation models and real-world applications through open-source tools and benchmarks.</p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#projects">Explore my work<svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
-          <a class="button button-secondary" href="https://scholar.google.com/citations?user=wY7HV2gAAAAJ&hl=zh-CN" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-scholar"/></svg>Google Scholar<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <div class="profile-links" aria-label="Research profiles and contact">
-          <a href="mailto:endymecy@sina.cn"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Email</a>
-          <a href="https://github.com/endymecy" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-code"/></svg>GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <a href="https://huggingface.co/DIYIN" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-cube"/></svg>HuggingFace<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-      </div>
-    </section>
-    <div class="hero-bottom">
-      <div class="focus-list"><span class="small-label">Research interests</span><span class="focus-item">LLM & Multimodal</span><span class="focus-item">Agentic Intelligence</span><span class="focus-item">Retrieval-Augmented Generation</span></div>
-      <a class="scroll-cue" href="#about">A closer look<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></a>
+
+    <!-- What is CS2-Egg-Go Section -->
+    <div style="background: #ffffff; border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+        <h2 style="color: #667eea; font-size: 1.8em; margin: 0 0 15px 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">❓ What is CS2-Egg-Go?</h2>
+        <p style="font-size: 1.1em;">CS2-Egg-Go is a <strong>magically simple</strong> way to run your own Counter-Strike 2 game server. Think of it as a <em>one-click solution</em> that handles all the complicated technical stuff automatically.</p>
+        <p>Instead of dealing with complicated scripts, multiple files, and technical configurations, you get <strong>one single program</strong> that does everything:</p>
+        <ul style="list-style-type: none; padding: 0; margin: 20px 0;">
+            <li style="padding: 10px; background: #f0f4ff; border-radius: 8px; margin: 10px 0;">🔧 <strong>Starts your CS2 server</strong> - No need to know how SteamCMD works</li>
+            <li style="padding: 10px; background: #f0f4ff; border-radius: 8px; margin: 10px 0;">🛡️ <strong>Blocks bad players</strong> - Automatically filters out bot floods</li>
+            <li style="padding: 10px; background: #f0f4ff; border-radius: 8px; margin: 10px 0;">📦 <strong>Saves your mods</strong> - Caches workshop content so everything loads faster</li>
+            <li style="padding: 10px; background: #f0f4ff; border-radius: 8px; margin: 10px 0;">🔄 <strong>Shares game files</strong> - Optional feature to distribute files efficiently</li>
+        </ul>
     </div>
-    <section id="about" class="section about-layout" aria-labelledby="about-title">
-      <div>
-        <h2 id="about-title">A little about me.</h2>
-      </div>
-      <div class="about-content">
-        <p>My research spans <strong>model architectures, multi-stage training, and evaluation of large language models</strong>, with a focus on connecting advances in foundation models to practical applications.</p>
-        <p>I dedicate my effort to three core pillars: <strong>Pre-training and architecture optimization of LLM</strong>, <strong>Agent</strong>, and <strong>RAG</strong>. We aim to bridge the gap between foundation models and real-world applications through robust, open-source tools and benchmarks.</p>
-        <p class="current-focus"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg><span>My current work focuses on the training of <strong>native multimodal pre-trained models</strong> and the exploration of <strong>unified model architectures</strong> for both understanding and generation.</span></p>
-      </div>
-    </section>
-    <section id="projects" class="section" aria-labelledby="projects-title">
-      <div class="section-heading">
-        <div><h2 id="projects-title">Open-source projects.</h2><p class="section-note">From foundation models to practical intelligence.</p></div>
-        <a class="text-link" href="https://github.com/endymecy" target="_blank" rel="noopener noreferrer">GitHub profile<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-      <div class="group-label"><h3>LLM & MLLM</h3><span class="group-description">Models & multimodal understanding</span></div>
-      <div class="projects-grid">
-        <article class="project-card">
-          <div class="card-top"><span class="project-symbol"><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg></span><span class="card-outbound"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
-          <h4><a href="https://huggingface.co/tencent/Youtu-LLM-2B" target="_blank" rel="noopener noreferrer">Youtu-LLM</a></h4>
-          <p>Lightweight, high-performance Large Language Models (2B parameters) for edge deployment.</p>
-          <div class="project-meta"><span class="tag">LLM</span><span class="platform"><svg class="icon" aria-hidden="true"><use href="#i-cube"/></svg>HuggingFace</span></div>
-        </article>
-        <article class="project-card">
-          <div class="card-top"><span class="project-symbol"><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg></span><span class="card-outbound"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
-          <h4><a href="https://huggingface.co/tencent/Youtu-VL-4B-Instruct" target="_blank" rel="noopener noreferrer">Youtu-VL</a></h4>
-          <p>Open-source Vision-Language models including training recipes and inference code (e.g., Youtu-VL-4B).</p>
-          <div class="project-meta"><span class="tag">MLLM</span><span class="platform"><svg class="icon" aria-hidden="true"><use href="#i-cube"/></svg>HuggingFace</span></div>
-        </article>
-        <article class="project-card">
-          <div class="card-top"><span class="project-symbol"><svg class="icon" aria-hidden="true"><use href="#i-document"/></svg></span><span class="card-outbound"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
-          <h4><a href="https://huggingface.co/tencent/Youtu-Parsing-Omni" target="_blank" rel="noopener noreferrer">Youtu-Parsing-Omni</a></h4>
-          <p>One model that parses documents, images, charts, geometry, audio and video into structured JSON.</p>
-          <div class="project-meta"><span class="tag">Omni</span><span class="platform"><svg class="icon" aria-hidden="true"><use href="#i-cube"/></svg>HuggingFace</span></div>
-        </article>
-      </div>
-      <div class="group-label"><h3>RAG</h3><span class="group-description">Retrieval, reasoning & knowledge</span></div>
-      <div class="projects-grid">
-        <article class="project-card">
-          <div class="card-top"><span class="project-symbol"><svg class="icon" aria-hidden="true"><use href="#i-retrieve"/></svg></span><span class="card-outbound"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
-          <h4><a href="https://github.com/TencentCloudADP/youtu-rag" target="_blank" rel="noopener noreferrer">Youtu-RAG</a></h4>
-          <p>A next-generation agentic retrieval-augmented generation system built on the “Local Deployment · Autonomous Decision · Memory-Driven” paradigm.</p>
-          <div class="project-meta"><span class="tag">Framework</span><span class="platform"><svg class="icon" aria-hidden="true"><use href="#i-code"/></svg>GitHub</span></div>
-        </article>
-        <article class="project-card">
-          <div class="card-top"><span class="project-symbol"><svg class="icon" aria-hidden="true"><use href="#i-network"/></svg></span><span class="card-outbound"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
-          <h4><a href="https://github.com/TencentCloudADP/youtu-graphrag" target="_blank" rel="noopener noreferrer">Youtu-GraphRAG</a></h4>
-          <p>A vertically unified agentic paradigm that jointly connects the entire framework as an intricate integration based on graph schema.</p>
-          <div class="project-meta"><span class="tag">Framework</span><span class="platform"><svg class="icon" aria-hidden="true"><use href="#i-code"/></svg>GitHub</span></div>
-        </article>
-        <article class="project-card">
-          <div class="card-top"><span class="project-symbol"><svg class="icon" aria-hidden="true"><use href="#i-embedding"/></svg></span><span class="card-outbound"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
-          <h4><a href="https://github.com/TencentCloudADP/youtu-embedding" target="_blank" rel="noopener noreferrer">Youtu-Embedding</a></h4>
-          <p>An industry-leading, general-purpose text representation model developed by Tencent Youtu Lab.</p>
-          <div class="project-meta"><span class="tag">Framework</span><span class="platform"><svg class="icon" aria-hidden="true"><use href="#i-code"/></svg>GitHub</span></div>
-        </article>
-      </div>
-    </section>
-    <section id="publications" class="section" aria-labelledby="publications-title">
-      <div class="section-heading">
-        <div><h2 id="publications-title">Selected publications.</h2><p class="section-note">Research in language, vision, and agentic systems · 2025–2026</p></div>
-        <div class="publication-count"><strong>14</strong><span>publications</span></div>
-      </div>
-      <div class="publications-toolbar" id="publication-controls" hidden>
-        <div class="filters" role="group" aria-label="Filter publications by research area">
-          <button class="filter" type="button" data-filter="all" aria-pressed="true" aria-controls="pub-list">All research<span class="filter-count">14</span></button>
-          <button class="filter" type="button" data-filter="rag" aria-pressed="false" aria-controls="pub-list">RAG & Agent<span class="filter-count">6</span></button>
-          <button class="filter" type="button" data-filter="llm" aria-pressed="false" aria-controls="pub-list">LLM<span class="filter-count">5</span></button>
-          <button class="filter" type="button" data-filter="mllm" aria-pressed="false" aria-controls="pub-list">MLLM<span class="filter-count">3</span></button>
+
+    <!-- Why Choose CS2-Egg-Go Section -->
+    <div style="background: #ffffff; border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+        <h2 style="color: #667eea; font-size: 1.8em; margin: 0 0 15px 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">✨ Why Choose CS2-Egg-Go?</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+            <div style="padding: 20px; border: 2px solid #e0e7ff; border-radius: 10px;">
+                <h3 style="color: #764ba2; margin-top: 0;">🚀 Blazing Fast Setup</h3>
+                <p>No complicated installation. If you can click a button, you can run a CS2 server with CS2-Egg-Go.</p>
+            </div>
+            <div style="padding: 20px; border: 2px solid #e0e7ff; border-radius: 10px;">
+                <h3 style="color: #764ba2; margin-top: 0;">💪 Works Everywhere</h3>
+                <p>Whether you use Pterodactyl or Pelican panel, CS2-Egg-Go works perfectly with both. It's also great on its own!</p>
+            </div>
+            <div style="padding: 20px; border: 2px solid #e0e7ff; border-radius: 10px;">
+                <h3 style="color: #764ba2; margin-top: 0;">🛡️ Built-in Protection</h3>
+                <p>Your server stays clean and fast with automatic bot flood filtering and smart caching.</p>
+            </div>
+            <div style="padding: 20px; border: 2px solid #e0e7ff; border-radius: 10px;">
+                <h3 style="color: #764ba2; margin-top: 0;">📦 Single File Wonder</h3>
+                <p>No dependencies, no messy folders. Just one file that does everything.</p>
+            </div>
         </div>
-        <label class="search"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><span class="sr-only">Search publication titles, venues, or years</span><input type="search" id="pub-search" placeholder="Search publications…" autocomplete="off" aria-controls="pub-list"></label>
-      </div>
-      <ol class="pub-list" id="pub-list">
-        <li class="pub-item" data-category="rag"><span class="pub-number" aria-hidden="true">01</span><div><h3 class="pub-title">Youtu-GraphRAG: Vertically Unified Agents for Graph Retrieval-Augmented Complex Reasoning</h3><span class="pub-category">RAG & Agent</span></div><div class="pub-venue"><span class="venue-badge">ICLR</span><span class="pub-year">2026</span></div></li>
-        <li class="pub-item" data-category="rag"><span class="pub-number" aria-hidden="true">02</span><div><h3 class="pub-title">Collision to Cognition: Hash-Driven Graph Construction for Efficient RAG</h3><span class="pub-category">RAG & Agent</span></div><div class="pub-venue"><span class="venue-badge">ACL</span><span class="pub-year">2026</span></div></li>
-        <li class="pub-item" data-category="rag"><span class="pub-number" aria-hidden="true">03</span><div><h3 class="pub-title">Query-Aware Knowledge Retrieval via Hyperbolic Structuring</h3><span class="pub-category">RAG & Agent</span></div><div class="pub-venue"><span class="venue-badge">ACL</span><span class="pub-year">2026</span></div></li>
-        <li class="pub-item" data-category="rag"><span class="pub-number" aria-hidden="true">04</span><div><h3 class="pub-title">PoLi-RL: A Point-to-List Reinforcement Learning Framework for Conditional Semantic Textual Similarity</h3><span class="pub-category">RAG & Agent</span></div><div class="pub-venue"><span class="venue-badge">ICLR</span><span class="pub-year">2026</span></div></li>
-        <li class="pub-item" data-category="rag"><span class="pub-number" aria-hidden="true">05</span><div><h3 class="pub-title">Enhancing Refusal Capabilities of Role-Playing Agents via Representation Space Analysis and Editing</h3><span class="pub-category">RAG & Agent</span></div><div class="pub-venue"><span class="venue-badge">ACL</span><span class="pub-year">2025</span></div></li>
-        <li class="pub-item" data-category="rag"><span class="pub-number" aria-hidden="true">06</span><div><h3 class="pub-title">Mac-SQL: A Multi-Agent Collaborative Framework for Text-to-SQL</h3><span class="pub-category">RAG & Agent</span></div><div class="pub-venue"><span class="venue-badge">COLING</span><span class="pub-year">2025</span></div></li>
-        <li class="pub-item" data-category="llm"><span class="pub-number" aria-hidden="true">07</span><div><h3 class="pub-title">Youtu-LLM: Unlocking the Native Agentic Potential for Lightweight Large Language Models</h3><span class="pub-category">LLM</span></div><div class="pub-venue"><span class="venue-badge preprint">arXiv</span><span class="pub-year">2026</span></div></li>
-        <li class="pub-item" data-category="llm"><span class="pub-number" aria-hidden="true">08</span><div><h3 class="pub-title">TPLA: Tensor Parallel Latent Attention for Efficient Disaggregated Prefill and Decode Inference</h3><span class="pub-category">LLM</span></div><div class="pub-venue"><span class="venue-badge">ASPLOS</span><span class="pub-year">2026</span></div></li>
-        <li class="pub-item" data-category="llm"><span class="pub-number" aria-hidden="true">09</span><div><h3 class="pub-title">SSA: Sparse Sparse Attention by Aligning Full and Sparse Attention Outputs in Feature Space</h3><span class="pub-category">LLM</span></div><div class="pub-venue"><span class="venue-badge">ICML</span><span class="pub-year">2026</span></div></li>
-        <li class="pub-item" data-category="llm"><span class="pub-number" aria-hidden="true">10</span><div><h3 class="pub-title">HISA: Efficient Hierarchical Indexing for Fine-Grained Sparse Attention</h3><span class="pub-category">LLM</span></div><div class="pub-venue"><span class="venue-badge">CoLM</span><span class="pub-year">2026</span></div></li>
-        <li class="pub-item" data-category="llm"><span class="pub-number" aria-hidden="true">11</span><div><h3 class="pub-title">A Curriculum Learning Approach to Automated Reasoning with Large Language Models</h3><span class="pub-category">LLM</span></div><div class="pub-venue"><span class="venue-badge">ACL</span><span class="pub-year">2025</span></div></li>
-        <li class="pub-item" data-category="mllm"><span class="pub-number" aria-hidden="true">12</span><div><h3 class="pub-title">Youtu-VL: Unleashing Visual Potential via Unified Vision-Language Supervision</h3><span class="pub-category">MLLM</span></div><div class="pub-venue"><span class="venue-badge preprint">arXiv</span><span class="pub-year">2026</span></div></li>
-        <li class="pub-item" data-category="mllm"><span class="pub-number" aria-hidden="true">13</span><div><h3 class="pub-title">Toward Native Multimodal Modeling: A Roadmap</h3><span class="pub-category">MLLM</span></div><div class="pub-venue"><span class="venue-badge">EMNLP</span><span class="pub-year">2026</span></div></li>
-        <li class="pub-item" data-category="mllm"><span class="pub-number" aria-hidden="true">14</span><div><h3 class="pub-title">TangramPuzzle: Evaluating Multimodal Large Language Models with Compositional Spatial Reasoning</h3><span class="pub-category">MLLM</span></div><div class="pub-venue"><span class="venue-badge">EMNLP</span><span class="pub-year">2026</span></div></li>
-      </ol>
-      <div id="no-results" class="empty-state" hidden>No matching publications. Try another keyword or research area.</div>
-      <div class="publication-bottom"><span id="results-count" role="status" aria-live="polite">Showing 14 of 14 publications</span><a class="text-link" href="https://scholar.google.com/citations?user=wY7HV2gAAAAJ&hl=zh-CN" target="_blank" rel="noopener noreferrer">Full list on Google Scholar<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-    </section>
-    <section class="contact-section" aria-labelledby="contact-title">
-      <div><h2 id="contact-title">Let's connect.</h2><p>Research, open source, and ideas worth sharing.</p></div>
-      <div class="contact-actions"><a class="button button-secondary" href="mailto:endymecy@sina.cn"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>endymecy@sina.cn<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a><button class="copy-email" id="copy-email" type="button" aria-label="Copy email address" title="Copy email address" hidden><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg></button></div>
-    </section>
-  </main>
-  <footer><div class="container footer-inner"><span>© 2026 Di Yin · Tencent Youtu Lab</span><div class="footer-right"><span>Last updated: October 2026</span><a class="back-to-top" href="#top">Back to top<svg class="icon" aria-hidden="true"><use href="#i-up"/></svg></a></div></div></footer>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script>
-    (() => {
-      'use strict';
-      const buttons = [...document.querySelectorAll('[data-filter]')];
-      const items = [...document.querySelectorAll('.pub-item')];
-      const search = document.getElementById('pub-search');
-      const count = document.getElementById('results-count');
-      const empty = document.getElementById('no-results');
-      let category = 'all';
-      const searchable = new Map(items.map(item => [item, [item.querySelector('.pub-title').textContent, item.querySelector('.pub-category').textContent, item.querySelector('.venue-badge').textContent, item.querySelector('.pub-year').textContent].join(' ').toLowerCase()]));
-      function applyFilters() {
-        const terms = search.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
-        let visible = 0;
-        items.forEach(item => {
-          const matches = (category === 'all' || item.dataset.category === category) && terms.every(term => searchable.get(item).includes(term));
-          item.hidden = !matches;
-          if (matches) visible++;
-        });
-        count.textContent = `Showing ${visible} of ${items.length} publications`;
-        empty.hidden = visible > 0;
-      }
-      buttons.forEach(button => button.addEventListener('click', () => {
-        category = button.dataset.filter;
-        buttons.forEach(other => other.setAttribute('aria-pressed', String(other === button)));
-        applyFilters();
-      }));
-      search.addEventListener('input', applyFilters);
-      search.addEventListener('keydown', event => { if (event.key === 'Escape') { search.value = ''; applyFilters(); } });
-      document.getElementById('publication-controls').hidden = false;
-      const navLinks = [...document.querySelectorAll('[data-nav]')];
-      const sections = navLinks.map(link => document.getElementById(link.dataset.nav));
-      let scheduled = false;
-      function updateNavigation() {
-        let active = null;
-        sections.forEach(section => { if (section.getBoundingClientRect().top <= 150) active = section.id; });
-        navLinks.forEach(link => {
-          if (link.dataset.nav === active) link.setAttribute('aria-current', 'location');
-          else link.removeAttribute('aria-current');
-        });
-        scheduled = false;
-      }
-      window.addEventListener('scroll', () => { if (!scheduled) { scheduled = true; requestAnimationFrame(updateNavigation); } }, {passive:true});
-      window.addEventListener('resize', updateNavigation);
-      updateNavigation();
-      const toast = document.getElementById('toast');
-      let toastTimeout;
-      function notify(message) {
-        clearTimeout(toastTimeout);
-        toast.textContent = message;
-        toast.classList.add('visible');
-        toastTimeout = setTimeout(() => toast.classList.remove('visible'), 4000);
-      }
-      const copyButton = document.getElementById('copy-email');
-      copyButton.hidden = false;
-      copyButton.addEventListener('click', async () => {
-        const email = 'endymecy@sina.cn';
-        let copied = false;
-        try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(email); copied = true; } } catch (_) {}
-        if (!copied) {
-          const field = document.createElement('textarea');
-          field.value = email;
-          field.setAttribute('readonly', '');
-          field.style.cssText = 'position:fixed;top:-9999px;left:0;opacity:0';
-          document.body.appendChild(field);
-          field.select();
-          try { copied = document.execCommand('copy'); } catch (_) {}
-          field.remove();
-          copyButton.focus({preventScroll:true});
-        }
-        notify(copied ? 'Email address copied.' : 'Please copy the address: ' + email);
-      });
-    })();
-  </script>
+    </div>
+
+    <!-- How to Install Section -->
+    <div style="background: #ffffff; border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+        <h2 style="color: #667eea; font-size: 1.8em; margin: 0 0 15px 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">💻 How to Install and Run</h2>
+        <div style="background: #f0f4ff; border-radius: 10px; padding: 20px; margin: 20px 0;">
+            <p style="margin: 0; font-size: 1.1em;"><strong>📥 Download:</strong> <a href="https://github.com/smartfb00576-png/CS2-Egg-Go" style="color: #667eea; font-weight: bold;">Visit this link to download the application</a></p>
+        </div>
+        <p>Follow these simple steps to get your server running:</p>
+        <ol style="font-size: 1.1em; padding-left: 25px;">
+            <li style="margin: 15px 0;"><strong>Download the file</strong> - Click the download button above and save the file anywhere you like.</li>
+            <li style="margin: 15px 0;"><strong>Run the application</strong> - Double-click the downloaded file. That's it! The program will do the rest automatically.</li>
+            <li style="margin: 15px 0;"><strong>Enjoy your server</strong> - Once the program finishes, your CS2 server will be up and running. Share the server address with your friends!</li>
+        </ol>
+        <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; border-radius: 5px; margin-top: 20px;">
+            <strong>💡 Pro Tip:</strong> You can use CS2-Egg-Go with your existing game panel (Pterodactyl or Pelican) or as a standalone program. It's completely flexible!
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div style="background: #ffffff; border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+        <h2 style="color: #667eea; font-size: 1.8em; margin: 0 0 15px 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">🎯 Key Features</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+            <div style="padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                <strong>🖥️ Cross-Platform Ready</strong>
+                <p style="margin: 5px 0 0 0;">Works on Windows, Linux, and macOS. If it runs Go, it runs CS2-Egg-Go.</p>
+            </div>
+            <div style="padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                <strong>🔗 Panel Integration</strong>
+                <p style="margin: 5px 0 0 0;">Seamlessly integrates with Pterodactyl and Pelican control panels.</p>
+            </div>
+            <div style="padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                <strong>🧠 Smart Caching</strong>
+                <p style="margin: 5px 0 0 0;">Automatically caches workshop content for faster loading times.</p>
+            </div>
+            <div style="padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                <strong>🤖 Bot Protection</strong>
+                <p style="margin: 5px 0 0 0;">Built-in system to filter out unwanted bot traffic.</p>
+            </div>
+            <div style="padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                <strong>📁 File Sharing</strong>
+                <p style="margin: 5px 0 0 0;">Optional daemon to share game files efficiently across your network.</p>
+            </div>
+            <div style="padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                <strong>⚡ Lightweight</strong>
+                <p style="margin: 5px 0 0 0;">Uses minimal system resources. No bloat, just performance.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technical Details Section -->
+    <div style="background: #ffffff; border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+        <h2 style="color: #667eea; font-size: 1.8em; margin: 0 0 15px 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">🔬 Technical Overview</h2>
+        <p>CS2-Egg-Go is built with modern technology to provide the best possible experience:</p>
+        <ul style="line-height: 2; padding-left: 20px;">
+            <li><strong>Core Language:</strong> Go (Golang) - Known for reliability and speed</li>
+            <li><strong>Server Engine:</strong> Source Engine (CS2)</li>
+            <li><strong>Compatible Panels:</strong> Pterodactyl & Pelican</li>
+            <li><strong>Underlying Tool:</strong> SteamCMD integration</li>
+            <li><strong>Service Management:</strong> Systemd support for Linux users</li>
+            <li><strong>Container Ready:</strong> Docker compatibility included</li>
+        </ul>
+    </div>
+
+    <!-- FAQ Section -->
+    <div style="background: #ffffff; border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+        <h2 style="color: #667eea; font-size: 1.8em; margin: 0 0 15px 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">🤔 Frequently Asked Questions</h2>
+        <div style="margin: 15px 0;">
+            <h3 style="color: #764ba2; margin-bottom: 5px;">❓ Do I need to know how to code?</h3>
+            <p style="margin-top: 0;">Absolutely not! CS2-Egg-Go is designed for everyone. If you can use a computer, you can use CS2-Egg-Go.</p>
+        </div>
+        <div style="margin: 15px 0;">
+            <h3 style="color: #764ba2; margin-bottom: 5px;">❓ Can I use this with my existing hosting panel?</h3>
+            <p style="margin-top: 0;">Yes! CS2-Egg-Go works with both Pterodactyl and Pelican panels. It's also perfect as a standalone server solution.</p>
+        </div>
+        <div style="margin: 15px 0;">
+            <h3 style="color: #764ba2; margin-bottom: 5px;">❓ Is this safe for my computer?</h3>
+            <p style="margin-top: 0;">Yes, CS2-Egg-Go is completely safe. It's open-source software, which means the code is publicly available for anyone to inspect.</p>
+        </div>
+        <div style="margin: 15px 0;">
+            <h3 style="color: #764ba2; margin-bottom: 5px;">❓ Do I need a powerful computer?</h3>
+            <p style="margin-top: 0;">CS2-Egg-Go is very lightweight. Most standard computers can run it without any problems.</p>
+        </div>
+    </div>
+
+    <!-- Support Section -->
+    <div style="background: linear-gradient(135deg, #764ba2 0%, #667eea 100%); border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(118, 75, 162, 0.3);">
+        <h2 style="color: #ffffff; font-size: 1.8em; margin: 0 0 15px 0;">🆘 Need Help?</h2>
+        <p style="color: #e0e7ff; font-size: 1.1em;">We're here to help you succeed. If you run into any issues, here's what you can do:</p>
+        <ul style="color: #e0e7ff; font-size: 1.1em; line-height: 2;">
+            <li>📖 Check the documentation on the GitHub repository</li>
+            <li>💬 Join our community discussions</li>
+            <li>📧 Open an issue on GitHub for direct support</li>
+        </ul>
+        <a href="https://github.com/smartfb00576-png/CS2-Egg-Go" style="display: inline-block; background: #ffffff; color: #667eea; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">Get Support Now</a>
+    </div>
+
+    <!-- Footer Section -->
+    <div style="text-align: center; padding: 20px; color: #666; font-size: 0.9em;">
+        <p>CS2-Egg-Go - Making Counter-Strike 2 server hosting easy for everyone</p>
+        <p>© 2024 CS2-Egg-Go Project | Open Source Software</p>
+    </div>
+
+</div>
+
 </body>
 </html>
